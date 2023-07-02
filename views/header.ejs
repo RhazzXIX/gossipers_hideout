@@ -1,0 +1,11 @@
+<header>
+  <div>
+    <h1>Gossiper's Hideout</h1>
+    <% if (currentUser) { %>
+    <a href="<%= currentUser.settingsUrl %>"> User Settings </a>
+    <% } else { %>
+    <a href="/log-in" class="button">Log in</a>
+    <a href="/sign-up" class="button">Sign up</a>
+    <% } %>
+  </div>
+</header>
