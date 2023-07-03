@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <%- include('header') -%>
+    <h1><%= title %></h1>
+    <form action="" method="post">
+      <label for="username">
+        Username:
+        <input
+          type="text"
+          name="username"
+          id="username"
+          required="true"
+          minlength="3"
+          value="<%= (locals.username === undefined ? '' : username) %>"
+        />
+      </label>
+      <label for="password">
+        Password:
+        <input type="password" name="password" id="password" required="true" />
+      </label>
+      <label for="confirm_password">
+        Confirm Password:
+        <input
+          type="password"
+          name="confirm_password"
+          id="confirm_password"
+          required="true"
+        />
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+    <% if (locals.errors) { %>
+    <ul>
+      <% errors.forEach(error => { %>
+      <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+    <% } %>
+  </body>
+</html>
