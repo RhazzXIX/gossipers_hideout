@@ -8,5 +8,6 @@ const userController = require("../controllers/userController");
 router.get("/", userController.sign_up_get);
 
 // Post request for user sign-up.
+router.post("/", userController.sign_up_post);
 
 module.exports = router;
