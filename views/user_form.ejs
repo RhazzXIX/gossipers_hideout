@@ -24,6 +24,7 @@
         Password:
         <input type="password" name="password" id="password" required="true" />
       </label>
+      <% if (locals.toLogIn === undefined) { %>
       <label for="confirm_password">
         Confirm Password:
         <input
@@ -33,6 +34,7 @@
           required="true"
         />
       </label>
+      <% } %>
       <button type="submit">Submit</button>
     </form>
     <% if (locals.errors) { %>

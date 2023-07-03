@@ -73,6 +73,12 @@ module.exports.sign_up_post = [
   }),
 ];
 
-// Handle Log in Get Request
+// Handle Log in GET Request
+module.exports.log_in_get = function (req, res, next) {
+  res.render("user_form", {
+    title: "Log in to post messages",
+    toLogIn: true,
+  });
+} as Handler;
 
-
+// Handle Log in POST Request
