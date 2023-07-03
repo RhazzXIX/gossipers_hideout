@@ -8,7 +8,7 @@ const User = require("../models/user");
 
 // Handle user sign-up GET request
 module.exports.sign_up_get = function (req, res, next) {
-  res.render("sign_up", {
+  res.render("user_form", {
     title: "Sign up to post messages",
   });
 } as Handler;
@@ -46,26 +46,33 @@ module.exports.sign_up_post = [
         // Handle password hashing error
         if (err) return next(err);
 
-        // Create user save and log in.
+        // Create user & save
         const user = new User({
           name: req.body.username,
           password: hashedPassword,
           isMember: false,
           isAdmin: false,
         });
-        res.locals.currentUser = user;
         await user.save();
         next();
       });
     } else {
       // Re-render sign up form if there are errors
-      res.render("sign_up", {
+      res.render("user_form", {
         title: "Sign-up to post messages",
         errors,
         username: req.body.username,
       });
     }
   }),
+
+  // Log in user after sign-up
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/log-in",
+  }),
 ];
 
-//  Handle user sign-up POST request
+// Handle Log in Get Request
+
+
