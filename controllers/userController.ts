@@ -55,7 +55,7 @@ module.exports.sign_up_post = [
         });
         res.locals.currentUser = user;
         await user.save();
-        res.redirect('/');
+        next();
       });
     } else {
       // Re-render sign up form if there are errors
