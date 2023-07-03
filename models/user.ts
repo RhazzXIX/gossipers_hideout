@@ -22,4 +22,8 @@ const UserSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('user', UserSchema)
+UserSchema.virtual("settingsUrl").get(function () {
+  return `/settings/${this._id}`;
+});
+
+module.exports = mongoose.model("user", UserSchema);
