@@ -6,6 +6,12 @@ import passport from "../config/authentication";
 
 const User = require("../models/user");
 
+declare module "express-session" {
+  interface Session {
+    messages?: string[];
+  }
+}
+
 // Handle user sign-up GET request
 module.exports.sign_up_get = function (req, res, next) {
   res.render("user_form", {
@@ -75,10 +81,45 @@ module.exports.sign_up_post = [
 
 // Handle Log in GET Request
 module.exports.log_in_get = function (req, res, next) {
+  // Storage for errors from authentication.
+  const errors: { msg: string }[] = [];
+  // If there are errors from authentication.
+  if (req.session.messages && req.session.messages.length > 0) {
+    req.session.messages.forEach((message) => {
+      errors.push({ msg: message });
+    });
+  }
+  // Delete session messages.
+  delete req.session.messages;
+  // Render form.
   res.render("user_form", {
     title: "Log in to post messages",
     toLogIn: true,
+    errors: errors.length <= 0 ? null : errors,
   });
 } as Handler;
 
-// Handle Log in POST Request
+// Handle Log in POST Request.
+module.exports.log_in_post = [
+  // Validate and sanitize.
+  body("username", "Invalid username").trim().isLength({ min: 3 }).escape(),
+  body("password", "Invalid password").trim().escape(),
+  // Re-render form if there are errors.
+  asyncHandler(async function (req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.render("user_form", {
+        title: "Log in",
+        username: req.body.username,
+        errors: errors.array(),
+      });
+    }
+    next();
+  }),
+  // Authenticate user.
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureMessage: true,
+    failureRedirect: "/log-in",
+  }),
+];
