@@ -8,7 +8,7 @@ import passport from "./config/authentication";
 require("dotenv").config();
 const path = require("path");
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
+const settingsRouter = require("./routes/settings");
 const sign_upRouter = require("./routes/sign_up");
 const log_inRouter = require("./routes/log_in");
 
@@ -53,7 +53,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/settings", settingsRouter);
 app.use("/sign-up", sign_upRouter);
 app.use("/log-in", log_inRouter);
 
