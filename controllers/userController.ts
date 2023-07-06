@@ -1,8 +1,10 @@
 import { Handler } from "express";
 import { ValidationError, body, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
 import asyncHandler from "express-async-handler";
 import passport from "../config/authentication";
+import createHttpError from "http-errors";
 
 const User = require("../models/user");
 
@@ -123,3 +125,16 @@ module.exports.log_in_post = [
     failureRedirect: "/log-in",
   }),
 ];
+
+// Handle User settings GET request
+module.exports.user_settings_get = function (req, res, next) {
+  if (!res.locals.currentUser) res.redirect("/");
+  if (
+    !mongoose.isValidObjectId(req.params.userId) ||
+    res.locals.currentUser._id.toString() !== req.params.userId
+  )
+    return res.redirect(res.locals.currentUser.settingsUrl);
+  res.render("user_settings", {
+    title: `Welcome ${res.locals.currentUser.name}`,
+  });
+} as Handler;

@@ -1,10 +1,9 @@
 import express from "express";
 
+const userController = require("../controllers/userController");
 const router = express.Router();
 
-/* GET users listing. */
-router.get("/:userId", function (req, res, next) {
-  res.send("respond with a resource");
-});
+/* GET user settings */
+router.get("/:userId", userController.user_settings_get);
 
 module.exports = router;
