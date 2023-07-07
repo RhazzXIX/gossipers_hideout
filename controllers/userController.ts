@@ -4,7 +4,6 @@ import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
 import asyncHandler from "express-async-handler";
 import passport from "../config/authentication";
-import createHttpError from "http-errors";
 
 const User = require("../models/user");
 
@@ -128,16 +127,63 @@ module.exports.log_in_post = [
 
 // Handle User settings GET request
 module.exports.user_settings_get = function (req, res, next) {
+  // Redirect to index if user is not logged in
   if (!res.locals.currentUser) res.redirect("/");
+  // Redirect to user settings if trying to access different user settings.
   if (
     !mongoose.isValidObjectId(req.params.userId) ||
     res.locals.currentUser._id.toString() !== req.params.userId
   )
     return res.redirect(res.locals.currentUser.settingsUrl);
+  // Render user settings page.
   res.render("user_settings", {
     title: `Welcome ${res.locals.currentUser.name}`,
   });
 } as Handler;
+
+module.exports.user_application_post = [
+  // Validation and sanitation
+  body("memberCode")
+    .trim()
+    .notEmpty()
+    .withMessage("Code should not be empty")
+    // check if user entered the right code.
+    .custom((value) => {
+      if (value === "$ecretM3mber") {
+        return true;
+      } else {
+        throw new Error("Wrong member code. Check README.md");
+      }
+    })
+    .escape(),
+  body("applyForAdmin").trim().escape(),
+  // Handle POST req
+  asyncHandler(async function (req, res, next) {
+    // Check for validation errors.
+    const errors = validationResult(req);
+    // If there are no errors, handle application request
+    if (errors.isEmpty()) {
+      // Create an updated user
+      const updatedUser = new User({
+        _id: res.locals.currentUser._id,
+        name: res.locals.currentUser.name,
+        password: res.locals.password,
+        isMember: true,
+        isAdmin: req.body.applyForAdmin === "yes" ? true : false,
+      });
+      // Update user in database.
+      await User.findByIdAndUpdate(res.locals.currentUser._id, updatedUser, {});
+      // Log out user to update res.locals.currentUser
+      res.redirect("/settings/log-out");
+    } else {
+      // If there are errors re-render form with errors
+      res.render("user_settings", {
+        title: `Welcome ${res.locals.currentUser.name}`,
+        errors: errors.array(),
+      });
+    }
+  }),
+];
 
 module.exports.user_logout_get = function (req, res, next) {
   req.logout(function (err) {
