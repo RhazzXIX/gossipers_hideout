@@ -138,3 +138,10 @@ module.exports.user_settings_get = function (req, res, next) {
     title: `Welcome ${res.locals.currentUser.name}`,
   });
 } as Handler;
+
+module.exports.user_logout_get = function (req, res, next) {
+  req.logout(function (err) {
+    if (err) return next(err);
+    res.redirect("/");
+  });
+} as Handler;
