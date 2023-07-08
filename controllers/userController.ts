@@ -7,11 +7,6 @@ import passport from "../config/authentication";
 
 const User = require("../models/user");
 
-declare module "express-session" {
-  interface Session {
-    messages?: string[];
-  }
-}
 
 // Handle user sign-up GET request
 module.exports.sign_up_get = function (req, res, next) {

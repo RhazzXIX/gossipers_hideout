@@ -4,14 +4,6 @@ import bcrypt from "bcryptjs";
 
 const User = require("../models/user");
 
-declare global {
-  namespace Express {
-    interface User {
-      _id: string;
-    }
-  }
-}
-
 const LocalStrategy = passportLocal.Strategy;
 
 passport.use(

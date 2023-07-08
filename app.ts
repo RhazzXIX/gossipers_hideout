@@ -5,6 +5,7 @@ import session from "express-session";
 import logger from "morgan";
 import mongoose, { ConnectOptions } from "mongoose";
 import passport from "./config/authentication";
+import {} from './custom-types/extendedGlobal'
 require("dotenv").config();
 const path = require("path");
 const indexRouter = require("./routes/index");
