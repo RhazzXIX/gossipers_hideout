@@ -6,7 +6,36 @@
   </head>
   <body>
     <%- include('header') -%>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div class="widthLimitter">
+      <% if (locals.currentUser) {%>
+      <a href="/message/post" class="button"> Post Message </a>
+      <%}%>
+      <ul>
+        <% messages.forEach(message => {%>
+          <li>
+            <div class="messageCard">
+              <h2><%=message.title%></h2>
+              <p><%=message.text%></p>
+              <hr />
+              <div class="cardFooter">
+                <% if (message.fromUser && message.date) {%>
+                  <h3>by: <%=message.fromUser.name%></h3>
+                  <time datetime="<%=message.date.toISOString().substring(0,10)%>">
+                    <%= message.date.toDateString().substring(4) %>
+                  </time>
+                </p>
+                <% } else { %>
+                  <p>
+                    <em>
+                      Note: Be a member to know who posted the message and when.
+                    </em>
+                  </p> 
+                <% } %>
+              </div>
+            </div>
+          </li>
+        <%})%>
+      </ul>
+    </div>
   </body>
 </html>
