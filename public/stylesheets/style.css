@@ -1,8 +1,109 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 16px;
+}
+
+header {
+  background-color: aquamarine;
+  min-height: 60px;
+}
+
+header div.widthLimiter {
+  display: grid;
+  grid-template-columns: 1fr 70px 70px;
+  gap: 12px;
+  padding: 16px;
+  align-items: center;
+}
+
+div.widthLimiter {
+  max-width: 1200px;
+  min-width: 360px;
+  margin: auto;
+}
+
+body > div {
+  display: flex;
+  flex-direction: column;
+}
+
+body > div > a.button {
+  margin: 8px;
+  align-self: flex-end;
+}
+
+a.button {
+  width: max-content;
+  border: 2px solid;
+  border-color: rgb(200, 200, 200) rgb(148, 148, 148) rgb(148, 148, 148)
+    rgb(200, 200, 200);
+  padding: 4px 8px;
+  border-radius: 8px;
+  background-color: rgb(219, 219, 219);
+  font-size: 1.2rem;
+  color: black;
+}
+
+a.button:active {
+  background-color: gray;
+  border-color: rgb(148, 148, 148) rgb(200, 200, 200) rgb(200, 200, 200)
+    rgb(148, 148, 148);
+  color: rgb(216, 216, 216);
 }
 
 a {
-  color: #00B7FF;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+div.messageCard {
+  display: grid;
+  grid-template-rows: 30px 1fr max-content 30px;
+  grid-template-columns: 1fr;
+  font-size: 1.2rem;
+  padding: 8px;
+  border: 1px solid grey;
+  border-radius: 10px;
+  margin: auto;
+  max-width: 800px;
+  min-height: 100px;
+  max-height: fit-content;
+  gap: 6px;
+}
+
+div.messageCard:hover {
+  box-shadow: 0 0 4px black;
+}
+
+div.messageCard h2 {
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+}
+
+div.messageCard a.button {
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+  justify-self: end;
+}
+
+div.messageCard hr {
+  grid-row: 3 / 4;
+}
+
+div.cardFooter {
+  display: flex;
+  align-items: center;
+  gap: 50px;
 }

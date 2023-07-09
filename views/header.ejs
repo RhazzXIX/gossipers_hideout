@@ -1,10 +1,10 @@
 <header>
-  <div>
+  <div class="widthLimiter">
     <a href="/">
       <h1>Gossiper's Hideout</h1>
     </a>
     <% if (currentUser) { %>
-    <a href="<%= currentUser.settingsUrl %>"> User Settings </a>
+    <a href="<%= currentUser.settingsUrl %>" class="button"> User Settings </a>
     <% } else { %>
     <a href="/log-in" class="button">Log in</a>
     <a href="/sign-up" class="button">Sign up</a>
