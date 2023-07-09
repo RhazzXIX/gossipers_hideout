@@ -1,9 +1,10 @@
-
 declare global {
   namespace Express {
     interface User {
       _id: string;
+      password: string;
       isMember: boolean;
+      isAdmin: boolean;
     }
   }
 }
