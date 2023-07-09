@@ -27,7 +27,7 @@ const messageController = {
     });
   }),
   // Handle post message GET req.
-  message_post_get: function (req, res, next) {
+  post_message_get: function (req, res, next) {
     // If user is not logged in, redirect to index.
     if (!req.user) res.redirect("/");
     // Render form
@@ -35,6 +35,47 @@ const messageController = {
       title: "Post message",
     });
   } as Handler,
+  post_message_post: [
+    // Validate and sanitize.
+    body("title", "Message title should have at least 3 characters")
+      .trim()
+      .isLength({ min: 3 })
+      .escape(),
+    body("text", "Message text should have at least 3 characters")
+      .trim()
+      .isLength({ min: 3 })
+      .escape(),
+    asyncHandler(async function (req, res, next) {
+      // Check if user is logged in.
+      if (req.user) {
+        // Validation errors.
+        const errors = validationResult(req);
+        // If errors is not empty handle post request.
+        if (errors.isEmpty()) {
+          // Create a message document.
+          const message = new Message({
+            title: req.body.title,
+            text: req.body.text,
+            fromUser: req.user._id,
+            date: new Date(),
+          });
+          // Save message to database.
+          await message.save();
+          // Redirect to homepage.
+          res.redirect("/");
+        } else {
+          // If there are errors re-render page with errors.
+          res.render("post_message", {
+            title: "Post Message",
+            errors: errors.array(),
+          });
+        }
+      } else {
+        // If user is not logged in redirect to homepage.
+        res.redirect("/");
+      }
+    }),
+  ],
 };
 
 export default messageController;
