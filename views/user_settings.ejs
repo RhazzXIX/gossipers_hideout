@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/form.css">
     <title><%= title %></title>
   </head>
   <body>
     <%- include('header') -%>
     <div class="widthLimiter">
-      <h1><%= title %></h1>
+      <h2><%= title %></h2>
       <% if (!currentUser.isMember || !currentUser.isAdmin) {%>
         <form
           action="<%= currentUser.settingsUrl + '/application' -%>"
@@ -29,7 +30,7 @@
               required="true"
             />
           </label>
-          <label for="applyForAdmin">
+          <label for="applyForAdmin" class="checkbox">
             <input
               type="checkbox"
               name="applyForAdmin"
@@ -40,18 +41,19 @@
           </label>
           <button type="submit">Submit</button>
           <hr />
+          <p><em>Note:</em></p>
+          <ul>
+            <li>You will be logged out if your application is successful.</li>
+            <li>If you are an admin, you can delete messages.</li>
+          </ul>
           <% if (locals.errors) {%>
+            <hr>
             <ul>
               <% errors.forEach(error => {%>
                 <li><%= error.msg %></li>
               <%})%>
             </ul>
           <%}%>
-          <p><em>Note:</em></p>
-          <ul>
-            <li>You will be logged out if your application is successful.</li>
-            <li>If you are an admin, you can delete messages.</li>
-          </ul>
         </form>
       <%}%>
       <a href="/settings/log-out" class="button">Log out</a>

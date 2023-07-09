@@ -1,0 +1,39 @@
+body > div > h2 {
+  margin: 12px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+  margin-left: 48px;
+  max-width: 500px;
+  font-size: 1.2rem;
+}
+
+form label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+form label.checkbox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+label input,
+label textarea {
+  font-size: 1.2rem;
+  padding: 4px 8px;
+}
+
+form button {
+  align-self: flex-end;
+  max-width: max-content;
+  font-size: 1.1rem;
+  padding: 4px 8px;
+}
