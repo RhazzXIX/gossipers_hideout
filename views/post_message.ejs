@@ -20,5 +20,13 @@
       <br />
       <button type="submit">Submit</button>
     </form>
+    <% if (locals.errors) {%>
+      <hr>
+      <ul>
+        <% errors.forEach(error => {%>
+          <li><%=error.msg%></li>
+        <% }) %>
+      </ul>
+    <% } %>
   </body>
 </html>
