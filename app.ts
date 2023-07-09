@@ -7,6 +7,8 @@ import mongoose, { ConnectOptions } from "mongoose";
 import passport from "./config/authentication";
 import {} from "./custom-types/extendedGlobal";
 import messageRouter from "./routes/messageRoute";
+import helmet from "helmet";
+import RateLimit from "express-rate-limit";
 require("dotenv").config();
 const path = require("path");
 const indexRouter = require("./routes/index");
@@ -28,6 +30,15 @@ const main = async () => {
 };
 
 main().catch((err) => console.log(err));
+
+// Set up for deployment
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 20,
+});
+app.use(limiter);
+app.use(compression());
+app.use(helmet());
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
