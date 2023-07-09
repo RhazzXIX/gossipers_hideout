@@ -9,7 +9,7 @@ module.exports.message_list = asyncHandler(async function (req, res, next) {
   // Messages storage.
   let messages;
   // Check if the user is a member.
-  if (req.user?.isMember) {
+  if (req.user && req.user.isMember) {
     // Retrieve all message info if the user is a member.
     messages = await Message.find()
       .populate("fromUser")
@@ -25,3 +25,13 @@ module.exports.message_list = asyncHandler(async function (req, res, next) {
     messages,
   });
 });
+
+// Handle post message GET req.
+module.exports.message_post_get = function (req, res, next) {
+  // If user is not logged in, redirect to index.
+  if (!req.user) res.redirect("/");
+  // Render form
+  res.render("post_message", {
+    title: "Post message",
+  });
+} as Handler;
