@@ -5,7 +5,8 @@ import session from "express-session";
 import logger from "morgan";
 import mongoose, { ConnectOptions } from "mongoose";
 import passport from "./config/authentication";
-import {} from './custom-types/extendedGlobal'
+import {} from "./custom-types/extendedGlobal";
+import messageRouter from "./routes/messageRoute";
 require("dotenv").config();
 const path = require("path");
 const indexRouter = require("./routes/index");
@@ -57,6 +58,7 @@ app.use("/", indexRouter);
 app.use("/settings", settingsRouter);
 app.use("/sign-up", sign_upRouter);
 app.use("/log-in", log_inRouter);
+app.use("/message", messageRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
