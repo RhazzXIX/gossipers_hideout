@@ -1,7 +1,6 @@
 import express from "express";
-
+import messageController from "../controllers/messageController";
 const router = express.Router();
-const messageController = require("../controllers/messageController");
 
 router.get("/post", messageController.message_post_get);
 
