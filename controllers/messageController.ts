@@ -76,6 +76,20 @@ const messageController = {
       }
     }),
   ],
+  delete_message: asyncHandler(async function (req, res, next) {
+    // check if user is admin and the req params is a valid id.
+    if (
+      req.user &&
+      req.user.isAdmin &&
+      mongoose.isValidObjectId(req.params.messageId)
+    ) {
+      await Message.findByIdAndDelete(req.params.messageId).exec();
+      res.redirect("/");
+    } else {
+      // Redirect to home page if not.
+      res.redirect("/");
+    }
+  }),
 };
 
 export default messageController;

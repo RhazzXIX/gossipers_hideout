@@ -6,4 +6,6 @@ router.get("/post", messageController.post_message_get);
 
 router.post("/post", messageController.post_message_post);
 
+router.get("/delete/:messageId", messageController.delete_message);
+
 export default router;
