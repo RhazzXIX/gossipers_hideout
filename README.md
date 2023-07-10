@@ -1,7 +1,10 @@
 # Gossiper's Hideout 
 
-Live site: "To follow"
-Code: https://github.com/RhazzXIX/gossipers_hideout
+### Member Code
+  *$ecretM3mber*
+
+Live site: https://gossipers-hideout.onrender.com  
+Repository: https://github.com/RhazzXIX/gossipers_hideout
 
 A project to solidify what I've learned so far in https://www.theodinproject.com/ Full-stack JavaScript curriculum on Node JS
 
